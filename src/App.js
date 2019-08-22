@@ -35,7 +35,7 @@ class App extends Component {
 
   componentDidMount() {
     // TODO: Get json from XML (utils)
-    let getCars = XlsxToJson().then( cars => {
+    XlsxToJson().then( cars => {
       console.log( cars );
       this.setState({ cars: cars })
     });
@@ -47,7 +47,7 @@ class App extends Component {
 
       return(
         <React.Fragment>
-          <h1>GM app {car.brand}</h1>;
+          <h1>GM app {car.brand}</h1>
           <Form models={this.state.cars.models} />
         </React.Fragment>
       )
