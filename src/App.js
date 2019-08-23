@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { XlsxToJson } from "./Utils";
 import  Form from "./Components/Form";
+import  FormResults from "./Components/FormResults";
+
+import  { Container } from 'react-bootstrap';
+
 
 /**
  *  Manage cars data from xslx file converted to JSON
@@ -11,7 +15,7 @@ import  Form from "./Components/Form";
  *  Project components
  *  App
  *   FormComponent
- *   FormResultsComponent
+ *   FormResults
  *
  *  States
  *    Intial state of aplication will be a json file with all Brands availables
@@ -21,7 +25,7 @@ import  Form from "./Components/Form";
  *    Utils folder contain scripts to controll the process of parse the information
  *    on a schema.
  *  Form
- *    Schema of form would be  [ model, version, year ]
+ *    Schema of form would be  [ model, version, motor, year ]
  */
 class App extends Component {
   constructor(props) {
@@ -29,16 +33,27 @@ class App extends Component {
     this.state = {
       json: false,
       cars: null,
-      car: {}
+      car: {},
+      results: [],
+      showResults : false
     };
+
+    this.completeForm = this.completeForm.bind(this);
   }
 
   componentDidMount() {
     // TODO: Get json from XML (utils)
     XlsxToJson().then( cars => {
-      console.log( cars );
       this.setState({ cars: cars })
     });
+  }
+
+  // Show Results
+  completeForm = ( results ) =>{
+    this.setState({
+      showResults:true,
+      results: results
+    })
   }
 
   render() {
@@ -47,8 +62,13 @@ class App extends Component {
 
       return(
         <React.Fragment>
-          <h1>GM app {car.brand}</h1>
-          <Form models={this.state.cars.models} />
+          <Container>
+            <h2 className="form-title">Veja as informações sobre o seu veículo:</h2>
+            <Form models={this.state.cars.models} cars={this.state.cars} completeForm={this.completeForm} />
+            {
+              this.state.showResults ? <FormResults  results={this.state.results}/> : ''         
+            }
+          </Container>
         </React.Fragment>
       )
     }else{

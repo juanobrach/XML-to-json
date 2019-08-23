@@ -1,0 +1,20 @@
+.select-custom{
+    height:62px;
+    min-width:72px;
+    background: #808080;
+
+    position:relative;    
+    .select-custom-arrow{
+        position:absolute;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 8px solid #ffffff;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+}
